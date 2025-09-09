@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.foundation)
+    implementation(libs.protolite.well.known.types)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

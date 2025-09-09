@@ -1,5 +1,6 @@
 package com.example.nectar.ui.theme.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,16 +23,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.nectar.R
 import com.example.nectar.data.model.dummy.CategoryItem
 
 @Composable
-fun CategoryCard(category: CategoryItem, onCategoryItemClick: () -> Unit = {}) {
+fun CategoryCard(
+    category: CategoryItem,
+    navController: NavController,
+    onCategoryItemClick: () -> Unit = {}
+) {
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
+    Log.d("currentRoute", currentRoute.toString())
+
     Card(
-        modifier = Modifier.fillMaxWidth().
-        clickable(
-            onClick = {onCategoryItemClick()}
-        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                Log.d("CategoryCard", "Category clicked: ${category.name}")
+                onCategoryItemClick()
+            },
         shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
             containerColor = category.backgroundColor
@@ -45,8 +56,7 @@ fun CategoryCard(category: CategoryItem, onCategoryItemClick: () -> Unit = {}) {
                 .height(180.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-
-        ){
+        ) {
             Image(
                 painter = painterResource(id = category.imageRes!!),
                 contentDescription = category.name,
@@ -59,16 +69,6 @@ fun CategoryCard(category: CategoryItem, onCategoryItemClick: () -> Unit = {}) {
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xff181725)
             )
-
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CategoryCardPreview() {
-    CategoryCard(category =
-        CategoryItem("Fresh Fruits & Vegetable", R.drawable.daily,
-            Color(0xFFE5F0E7)))
-
 }

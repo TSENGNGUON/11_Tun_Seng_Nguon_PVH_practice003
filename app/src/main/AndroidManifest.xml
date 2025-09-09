@@ -30,6 +30,13 @@
         <activity android:name=".HomePageActivity" />
         <!--    Product Details    -->
         <activity android:name=".ProductDetailsActivity"/>
+        <!--   ExploreListActivity     -->
+        <activity android:name=".ExploreListActivity"/>
+        <!--  Product List      /-->
+        <activity android:name=".ProductListActivity"/>
+        <!-- SearchScreenActivity -->
+        <activity android:name=".SearchScreenActivity"/>
+        <activity android:name=".OrderAcceptedActivity" />
 
 
     </application>

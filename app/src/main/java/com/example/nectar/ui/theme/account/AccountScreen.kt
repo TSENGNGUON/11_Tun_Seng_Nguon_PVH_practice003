@@ -1,32 +1,23 @@
 package com.example.nectar.ui.theme.account
 
-
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,191 +25,238 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.nectar.R
-import com.example.nectar.data.model.dummy.Product
-import com.example.nectar.ui.theme.components.CardItem
-import com.example.nectar.ui.theme.favourite.components.FavCardItem
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavScreen(
-    navController:
-    NavHostController  =
-        rememberNavController()
+fun AccountScreen(
+    navController: NavHostController = rememberNavController()
 ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxHeight()
+            .background(Color.White)
+    ) {
+        // Status Bar Space
+        Spacer(modifier = Modifier.height(40.dp))
 
+        // Title
+        Text(
+            text = "Account",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.Black,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)
+        )
 
-    val bestSelligProducts = listOf(
-        Product(
-            id = "1",
-            name = "Sprite Can",
-            price = 1.50,
-            imageRes = R.drawable.sprite_can,
-            info = "325ml, Price",
-        ),
-        Product(
-            id = "2",
-            name = "Diet Coke",
-            price = 1.99,
-            imageRes = R.drawable.diet_coke,
-            info = "355ml, Price",
-
-            ),
-        Product(
-            id = "3",
-            name = "Apple & Grape Juice",
-            price = 15.50,
-            imageRes = R.drawable.apple_grape_juice,
-            info = "2L, Price",
-
-            ),
-        Product(
-            id = "4",
-            name = "Coca Cola Can",
-            price = 4.99,
-            imageRes = R.drawable.coca_cola_can,
-            info = "325ml, Price",
-
-            ),
-        Product(
-            id = "5",
-            name = "Pepsi Can",
-            price = 4.99,
-            imageRes = R.drawable.pepsi_can,
-            info = "330ml, Price",
-
-            )
-    )
-//    val groceries = listOf(
-//        Product(
-//            id = "1",
-//            name = "Beef Bone",
-//            price = 4.99,
-//            imageRes = R.drawable.beef_bone,
-//            info = "1kg, Priceg",
-//        ),
-//        Product(
-//            id = "2",
-//            name = "Broiler Chicket",
-//            price = 4.99,
-//            imageRes = R.drawable.chicket,
-//            info = "1kg, Priceg",
-//
-//            ),
-//        Product(
-//            id = "3",
-//            name = "Organic Bananas",
-//            price = 4.99,
-//            imageRes = R.drawable.banana_2,
-//            info = "1kg, Priceg",
-//
-//            )
-//    )
-
-
-
-
-    //---------------------------------------------------
-    Scaffold(
-        bottomBar = {
-            BottomAppBar(
-                containerColor = Color.White,
+        // Profile Section
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Profile Image
+            Box(
                 modifier = Modifier
-                    .height(80.dp)
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp, start = 20.dp, end = 20.dp),
-
-                ) {
-                Button(
-                    onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(19.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF53B175)
-                    )
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "Add All To Cart",
-                            modifier = Modifier
-                                .padding(top = 10.dp, bottom = 10.dp),
-                            fontWeight = FontWeight.SemiBold
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .background(Color(0xFF489E67)
-                                ),
-
-                            ) {
-                            Text(
-                                text = "$12.96",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Light,
-                                modifier = Modifier
-                                    .padding(
-                                        vertical = 3.dp,
-                                        horizontal = 3.dp
-                                    ),
-
-                                )
-                        }
-                    }
-
-                }
+                    .size(64.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFE8F5E8))
+            ) {
+                // You can replace this with actual profile image
+                Image(
+                    painter = painterResource(id = R.drawable.profile_avatar), // Add your profile image
+                    contentDescription = "Profile Picture",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
             }
 
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Penh Seyha",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        Icons.Default.Edit,
+                        contentDescription = "Edit Profile",
+                        tint = Color(0xFF53B175),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                Text(
+                    text = "penhseyha980@gmail.com",
+                    fontSize = 16.sp,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
         }
 
-    ) { paddingValues ->
+        Divider(
+            color = Color(0xFFE2E2E2),
+            thickness = 1.dp,
+            modifier = Modifier.padding(horizontal = 20.dp)
+        )
+
+        // Menu Items
         LazyColumn(
             modifier = Modifier
-                .background(Color.White)
                 .fillMaxWidth()
-                .padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ){
-            // Content of each Items
+                .weight(1f)
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
 
-            items(bestSelligProducts) {
-                    cartItem ->
-
-                FavCardItem(
-                    product = cartItem,
-                    onIncreaseQuantity = {},
-                    onDecreaseQuantity = {}
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.shoppingbag),
+                    title = "Orders",
+                    onClick = { /* Navigate to orders */ }
                 )
 
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.person),
+                    title = "My Details",
+                    onClick = { /* Navigate to details */ }
+                )
 
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.locationon),
+                    title = "Delivery Address",
+                    onClick = { /* Navigate to delivery address */ }
+                )
+
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.creditcard),
+                    title = "Payment Methods",
+                    onClick = { /* Navigate to payment methods */ }
+                )
+
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.localoffer),
+                    title = "Promo Card",
+                    onClick = { /* Navigate to promo card */ }
+                )
+
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.notifications),
+                    title = "Notifications",
+                    onClick = { /* Navigate to notifications */ }
+                )
+
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.help),
+                    title = "Help",
+                    onClick = { /* Navigate to help */ }
+                )
+
+                AccountMenuItem(
+                    icon = painterResource(id = R.drawable.info),
+                    title = "About",
+                    onClick = { /* Navigate to about */ },
+                    showDivider = false
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
             }
-
-
-
-
-
         }
 
+        // Logout Button
+        Button(
+            onClick = { /* Handle logout */ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 30.dp),
+            shape = RoundedCornerShape(19.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFF2F3F2)
+            )
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Icon(
+                    Icons.Default.ExitToApp,
+                    contentDescription = "Logout",
+                    tint = Color(0xFF53B175),
+                    modifier = Modifier.size(20.dp)
+                )
+                Text(
+                    text = "Log Out",
+                    color = Color(0xFF53B175),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp
+                )
+            }
+        }
     }
-
-
-
-
 }
 
+@Composable
+fun AccountMenuItem(
+    icon: Painter,
+    title: String,
+    onClick: () -> Unit,
+    showDivider: Boolean = true
+) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClick() }
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                icon,
+                contentDescription = title,
+                tint = Color.Black,
+                modifier = Modifier.size(24.dp)
+            )
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+            Text(
+                text = title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Black,
+                modifier = Modifier.weight(1f)
+            )
+
+            Icon(
+                Icons.Default.KeyboardArrowRight,
+                contentDescription = "Arrow Right",
+                tint = Color.Black,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+
+        if (showDivider) {
+            Divider(
+                color = Color(0xFFE2E2E2),
+                thickness = 1.dp,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
-fun FavScreenPreview() {
-    FavScreen(
+fun AccountScreenPreview() {
+    AccountScreen(
         navController = rememberNavController()
     )
 }
-
-

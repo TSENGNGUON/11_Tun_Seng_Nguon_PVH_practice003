@@ -1,6 +1,7 @@
 package com.example.nectar.ui.theme.cartScreen
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,19 +12,33 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,7 +51,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.nectar.R
 import com.example.nectar.data.model.dummy.Product
 import com.example.nectar.ui.theme.components.CardItem
+import com.example.nectar.ui.theme.components.CheckoutBottomSheet
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun CardScreen(
@@ -44,6 +61,13 @@ fun CardScreen(
     NavHostController  =
     rememberNavController()
 ) {
+
+
+    var showSheet by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    var showOrderPopup by remember { mutableStateOf(false) }
+
+
 
     val products = listOf(
         Product(
@@ -98,48 +122,24 @@ fun CardScreen(
 
             )
     )
-//    val groceries = listOf(
-//        Product(
-//            id = "1",
-//            name = "Beef Bone",
-//            price = 4.99,
-//            imageRes = R.drawable.beef_bone,
-//            info = "1kg, Priceg",
-//        ),
-//        Product(
-//            id = "2",
-//            name = "Broiler Chicket",
-//            price = 4.99,
-//            imageRes = R.drawable.chicket,
-//            info = "1kg, Priceg",
-//
-//            ),
-//        Product(
-//            id = "3",
-//            name = "Organic Bananas",
-//            price = 4.99,
-//            imageRes = R.drawable.banana_2,
-//            info = "1kg, Priceg",
-//
-//            )
-//    )
 
 
-
-
-        //---------------------------------------------------
+    //---------------------------------------------------
     Scaffold(
         bottomBar = {
             BottomAppBar(
                 containerColor = Color.White,
                 modifier = Modifier
-                    .height(80.dp)
+                    .height(90.dp)
                     .fillMaxWidth()
                     .padding(bottom = 10.dp, start = 20.dp, end = 20.dp),
 
-            ) {
+                ) {
                 Button(
-                    onClick = {},
+                    onClick = {
+                        showSheet = true
+
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(19.dp),
@@ -162,7 +162,8 @@ fun CardScreen(
                         Row(
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
-                                .background(Color(0xFF489E67)
+                                .background(
+                                    Color(0xFF489E67)
                                 ),
 
                             ) {
@@ -186,47 +187,48 @@ fun CardScreen(
 
         }
 
-    ) { paddingValues ->
+    ) {
         LazyColumn(
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxWidth()
-                .padding(paddingValues),
+                .padding(bottom = 100.dp), // leave space for checkout button
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ){
-            // Content of each Items
-
-            items(products) {
-                    cartItem ->
+            verticalArrangement = Arrangement.Top // stack items normally
+        ) {
+            items(products) { cartItem ->
 
                 CardItem(
                     product = cartItem,
                     onIncreaseQuantity = {
                         cartItem.quantity++
-
                     },
                     onDecreaseQuantity = {
                         if (cartItem.quantity > 0) {
                             cartItem.quantity--
                         }
-
                     }
                 )
-
-
-
             }
-
-
         }
 
+
+    }
+
+    if (showSheet) {
+
+        CheckoutBottomSheet(
+            onDismiss = { showSheet = false },
+            onPlaceOrder = {
+                showOrderPopup = true
+            }
+        )
     }
 
 
 
-}
 
+}
 
 @Preview(showBackground = true)
 @Composable

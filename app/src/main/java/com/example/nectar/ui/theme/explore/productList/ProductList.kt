@@ -1,4 +1,6 @@
     package com.example.nectar.ui.theme.explore.productList
+    import android.annotation.SuppressLint
+    import android.content.Intent
     import androidx.compose.foundation.ExperimentalFoundationApi
     import androidx.compose.foundation.background
     import androidx.compose.foundation.layout.Arrangement
@@ -6,10 +8,12 @@
     import androidx.compose.foundation.layout.Column
     import androidx.compose.foundation.layout.PaddingValues
     import androidx.compose.foundation.layout.Spacer
+    import androidx.compose.foundation.layout.fillMaxHeight
     import androidx.compose.foundation.layout.fillMaxSize
     import androidx.compose.foundation.layout.fillMaxWidth
     import androidx.compose.foundation.layout.height
     import androidx.compose.foundation.layout.padding
+    import androidx.compose.foundation.lazy.LazyColumn
     import androidx.compose.foundation.lazy.grid.GridCells
     import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
     import androidx.compose.foundation.lazy.grid.items
@@ -33,21 +37,31 @@
     import androidx.compose.ui.graphics.Color
     import androidx.compose.ui.res.painterResource
     import androidx.compose.ui.text.font.FontWeight
+    import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.tooling.preview.Preview
     import androidx.compose.ui.unit.dp
     import androidx.compose.ui.unit.sp
+    import androidx.navigation.NavHostController
+    import androidx.navigation.compose.rememberNavController
+    import com.example.nectar.ExploreListActivity
     import com.example.nectar.R
     import com.example.nectar.data.model.dummy.Product
     import com.example.nectar.ui.theme.components.FilterButton
     import com.example.nectar.ui.theme.components.ProductCard
 
+
+
+
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
     @Composable
     fun ExploreScreenList(
         categoryName: String = "",
         onProductClick: (Product) -> Unit = {},
         onBackClick: () -> Unit = {},
-        onfilterClick: () -> Unit = {}
+        onfilterClick: () -> Unit = {},
+        navController: NavHostController = rememberNavController()
+
     ) {
         val primaryTextColor = Color(0xFF1D1D1D)
         // Sample data for the categories
@@ -100,71 +114,40 @@
 
                 )
         )
-        var showBottomSheet by remember { mutableStateOf(false) }
+
 
         Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = categoryName.ifEmpty { "Find Products" },
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = primaryTextColor,
-                                fontSize = 20.sp
-                            )
-                        }
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { onBackClick() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                                contentDescription = "Back",
-                            )
-                        }
-                    },
-                    actions = {
-                        FilterButton (
 
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White,
-                        titleContentColor = Color.Black
-                    )
-                )
-            }
-        ) { innerPadding ->
-            Column(
+        ) {
+            Column (
                 modifier = Modifier
-                    .padding(innerPadding)
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(20.dp),
+                    .padding(top = 0.dp, start = 20.dp, end = 20.dp, bottom = 0.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
 
                 // Product grid (sample data now, but you can filter by categoryName later)
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(15.dp),
-                    verticalArrangement = Arrangement.spacedBy(15.dp)
-                ) {
-                    items(products) {
-                        ProductCard(it, onProductClick = onProductClick)
-                    }
-                }
-            }
-        }
-    }
 
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(15.dp),
+                        verticalArrangement = Arrangement.spacedBy(15.dp)
+                    ) {
+                        items(products) {
+                            ProductCard(it, onProductClick = onProductClick)
+                        }
+                    }
+
+            }
+
+        }
+
+
+
+    }
 
     @Preview(showBackground = true)
     @Composable
